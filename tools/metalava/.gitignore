@@ -1,0 +1,16 @@
+*.iml
+.gradle
+/.idea/libraries
+/.idea/libraries-with-intellij-classes.xml
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/runConfigurations
+/.idea/runConfigurations.xml
+/.idea/usage.statistics.xml
+/.idea/caches
+/out
+build/
+stub-annotations/out
+.DS_Store
+/.attach_pid*
+/local.properties
