@@ -1,0 +1,17 @@
+package {
+    // See: http://go/android-license-faq
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
+
+cc_library_shared {
+    name: "hwcomposer.drm_imagination",
+    defaults: ["hwcomposer.drm_defaults"],
+    srcs: [
+        ":drm_hwcomposer_common",
+        ":drm_hwcomposer_platformimagination",
+    ],
+    shared_libs: ["libion"],
+    include_dirs: [
+        "hardware/ti/am57x/libhwcomposer",
+    ],
+}

@@ -1,0 +1,7 @@
+&its {
+       status = "disabled";
+};
+
+&chosen {
+        bootargs_ext = "pci=nomsi pcie_pme=nomsi";
+};

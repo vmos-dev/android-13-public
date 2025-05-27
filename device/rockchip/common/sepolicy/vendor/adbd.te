@@ -1,0 +1,6 @@
+allow adbd oemfs:dir { search };
+
+rw_rockchip_graphic_device(adbd)
+set_prop(adbd,ctl_start_prop)
+
+allowxperm adbd devpts:chr_file ioctl tty_ioctls;

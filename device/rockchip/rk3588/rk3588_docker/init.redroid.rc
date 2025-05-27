@@ -1,0 +1,82 @@
+on early-init
+    mount debugfs debugfs /sys/kernel/debug mode=755
+
+    # 32bit app require this, remove for 64bit only redroid
+    write /proc/sys/kernel/pid_max 65535
+
+    symlink /dev/net/tun /dev/tun
+
+    exec - root root -- /vendor/bin/chmod.sh
+
+    chown system system /dev/dma_heap/system
+
+    # used to place domain sockets
+    mkdir /ipc 0777
+
+on early-init && property:ro.container.disable.input.event=true
+    exec -- /bin/rm -rf /dev/input
+    # inputflinger require this dir
+    mkdir /dev/input
+
+# setup overlay data partition
+on early-init && property:ro.kernel.redroid.overlay=1
+    mkdir /data-diff/upper
+    rmdir /data-diff/work
+    mkdir /data-diff/work
+
+    mount overlay overlay /data lowerdir=/data-base,upperdir=/data-diff/upper,workdir=/data-diff/work
+
+# DNS
+on early-init && property:ro.kernel.net.eth0.dns1=*
+    setprop ro.boot.redroid_net_ndns 1
+    setprop ro.boot.redroid_net_dns1 ${ro.kernel.net.eth0.dns1}
+
+
+# network proxy
+on early-init && property:ro.kernel.net.eth0.proxy.type=*
+    setprop ro.boot.redroid_net_proxy_type ${ro.kernel.net.eth0.proxy.type}
+
+on early-init && property:ro.kernel.net.eth0.proxy.host=*
+    setprop ro.boot.redroid_net_proxy_host ${ro.kernel.net.eth0.proxy.host}
+
+on early-init && property:ro.kernel.net.eth0.proxy.port=*
+    setprop ro.boot.redroid_net_proxy_port ${ro.kernel.net.eth0.proxy.port}
+
+on early-init && property:ro.kernel.net.eth0.proxy.exclusionList=*
+    setprop ro.boot.redroid_net_proxy_exclude ${ro.kernel.net.eth0.proxy.exclusionList}
+
+on early-init && property:ro.kernel.net.eth0.proxy.pac=*
+    setprop ro.boot.redroid_net_proxy_pac ${ro.kernel.net.eth0.proxy.pac}
+
+on init
+    # lxcfs better
+    write /data/.empty 0
+    mount none /data/.empty /proc/vmallocinfo bind
+
+    # fix suspend host system?
+    mount none /dev/null /sys/power/state bind
+
+    setprop debug.renderengine.backend gles
+
+on post-fs-data
+    # no need to mount, and encryption not supported yet
+    trigger nonencrypted
+
+on late-init
+    umount /sys/fs/fuse/connections
+
+on early-init && property:ro.container.enable.container.config=true
+    setprop persist.disable.audio.output ${ro.container.disable.audio.output}
+    setprop persist.vendor.resolution.main ${ro.container.default.resolution}
+    setprop ro.boot.redroid_net_ndns ${ro.container.net_dns.num}
+    setprop ro.boot.redroid_net_dns1 ${ro.container.net_dns1}
+    setprop ro.boot.redroid_net_dns2 ${ro.container.net_dns2}
+
+# when use docker0 network and macvlan_static network,
+# must use ipconfigstore to config network, after post-fs-data and before netd
+on post-fs-data && property:ro.container.network.type=docker0
+    exec - system system -- /vendor/bin/ipconfigstore
+on post-fs-data && property:ro.container.network.type=macvlan_static
+    exec - system system -- /vendor/bin/ipconfigstore
+on property:sys.boot_completed=1 && property:ro.container.network.type=host
+    exec - root root -- /vendor/bin/host_network.sh
