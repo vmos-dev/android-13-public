@@ -1,0 +1,100 @@
+cc_prebuilt_binary {
+    name: "android.hardware.drm-service-lazy.widevine",
+    relative_install_path: "hw",
+    compile_multilib: "32",
+    shared_libs: [
+        "libwvaidl",
+    ],
+    srcs: ["bin/hw/android.hardware.drm-service-lazy.widevine"],
+    vintf_fragments: ["etc/vintf/manifest_android.hardware.drm-service.widevine.xml"],
+    init_rc: ["etc/init/android.hardware.drm-service-lazy.widevine.rc"],
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+    vendor: true,
+}
+
+cc_prebuilt_binary {
+    name: "android.hardware.drm-service.widevine",
+    relative_install_path: "hw",
+    compile_multilib: "32",
+    shared_libs: [
+        "libwvaidl",
+    ],
+    srcs: ["bin/hw/android.hardware.drm-service.widevine"],
+    vintf_fragments: ["etc/vintf/manifest_android.hardware.drm-service.widevine.xml"],
+    init_rc: ["etc/init/android.hardware.drm-service.widevine.rc"],
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+    vendor: true,
+}
+
+cc_prebuilt_binary {
+    name: "move_widevine_data.sh",
+    srcs: ["bin/move_widevine_data.sh"],
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+}
+
+cc_prebuilt_library {
+    name: "libwvaidl",
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["lib64/libwvaidl.so"],
+        },
+        lib32: {
+            srcs: ["lib/libwvaidl.so"],
+        },
+    },
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+    vendor: true,
+}
+
+cc_prebuilt_library {
+    name: "liboemcrypto",
+    compile_multilib: "32",
+    multilib: {
+        lib32: {
+            srcs: ["lib/mediadrm/L1/liboemcrypto.so"],
+        },
+    },
+    strip: {
+        none: true,
+    },
+    shared_libs: [
+        "libRkWvClient",
+    ],
+    check_elf_files: false,
+    vendor: true,
+}
+cc_rockchip_prebuilt_obj {
+    name: "c11fe8ac-b997-48cf-a28de2a55e5240ef.ta",
+    src:  "v1/ta/c11fe8ac-b997-48cf-a28de2a55e5240ef.ta",
+    vendor: true,
+    sub_dir: "lib/optee_armtz",
+}
+
+cc_rockchip_prebuilt_obj {
+    name: "c11fe8ac-b997-48cf-a28d-e2a55e5240ef.ta",
+    src: "v2/ta/c11fe8ac-b997-48cf-a28d-e2a55e5240ef.ta",
+    vendor: true,
+    sub_dir: "lib/optee_armtz",
+}
+cc_rockchip_prebuilt_library_shared {
+    name: "libRkWvClient",
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+    vendor: true,
+    optee: true,
+}

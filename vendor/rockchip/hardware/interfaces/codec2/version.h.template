@@ -1,0 +1,7 @@
+#ifndef _RK_C2_LIB_VERSION_H_
+#define _RK_C2_LIB_VERSION_H_
+
+#define C2_GIT_BUILD_VERSION "git-fa5cb4b-[component]: optimizing youtube playback lag build-time: 2024-07-01 09:55:25 running on rk3588s_t"
+
+
+#endif /* #ifndef _RK_C2_LIB_VERSION_H_ */
