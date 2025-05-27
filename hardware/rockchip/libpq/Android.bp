@@ -1,0 +1,74 @@
+cc_prebuilt_library {
+    name: "librkswpq",
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["lib/arm64/librkswpq.so"],
+        },
+        lib32: {
+            srcs: ["lib/arm/librkswpq.so"],
+        },
+    },
+    strip: {
+        none: true,
+    },
+    shared_libs: [
+        "librknnrt",
+    ],
+    check_elf_files: false,
+    vendor: true,
+}
+
+cc_prebuilt_library {
+    name: "libpq",
+    compile_multilib: "both",
+    multilib: {
+        lib64: {
+            srcs: ["lib/arm64/libpq.so"],
+        },
+        lib32: {
+            srcs: ["lib/arm/libpq.so"],
+        },
+    },
+    shared_libs: [
+        "librkswpq",
+    ],
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+    vendor: true,
+}
+
+cc_prebuilt_binary {
+    name: "rkaipq820_sd_model_rknn140.rknn",
+    allow_undefined_symbols: true,
+    proprietary: true,
+    vendor: true,
+    strip: {
+        none: true,
+    },
+    srcs: ["model/rkaipq820_sd_model_rknn140.rknn"],
+}
+
+cc_prebuilt_binary {
+    name: "rkaipq820_sr_model0_rknn140.rknn",
+    allow_undefined_symbols: true,
+    proprietary: true,
+    vendor: true,
+    strip: {
+        none: true,
+    },
+    srcs: ["model/rkaipq820_sr_model0_rknn140.rknn"],
+}
+
+cc_prebuilt_binary {
+    name: "rkaipq820_sr_model1_rknn140.rknn",
+    allow_undefined_symbols: true,
+    proprietary: true,
+    vendor: true,
+    strip: {
+        none: true,
+    },
+    srcs: ["model/rkaipq820_sr_model1_rknn140.rknn"],
+}

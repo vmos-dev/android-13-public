@@ -1,0 +1,17 @@
+cc_binary {
+    name: "pq_init",
+    init_rc: ["init.pq-init.rc"],
+    vendor: true,
+    srcs: [
+        "main.cpp",
+    ],
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "liblog",
+        "libpq",
+    ],
+    include_dirs: [
+        "hardware/rockchip/libpq/include/",
+    ],
+}
