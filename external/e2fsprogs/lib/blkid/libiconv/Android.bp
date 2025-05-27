@@ -1,0 +1,40 @@
+
+
+//libiconv.so
+// ANDROIDMK TRANSLATION WARNING: No 'include $(CLEAR_VARS)' detected before first assignment; clearing vars now
+cc_library {
+    name: "libiconv-1.16",
+    ramdisk_available: true,
+    vendor_ramdisk_available: true,
+    recovery_available: true,
+
+    cflags: [
+        "-Wno-multichar",
+        "-DANDROID",
+        "-DLIBDIR=\"c\"",
+        "-DBUILDING_LIBICONV",
+        "-DIN_LIBRARY",
+        "-Wno-unused-variable",
+        "-Wno-unused-parameter",
+        "-Wno-missing-field-initializers",
+        "-Wno-parentheses-equality",
+    ],
+
+    srcs: [
+        "libcharset/lib/localcharset.c",
+        "lib/iconv.c",
+        "lib/relocatable.c",
+    ],
+
+    local_include_dirs: [
+        "include",
+        "libcharset",
+        "lib",
+        "libcharset/include",
+        "srclib",
+    ],
+
+    // ANDROIDMK TRANSLATION ERROR: unsupported assignment to LOCAL_EXPORT_C_INCLUDES
+    // LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/include
+
+}
