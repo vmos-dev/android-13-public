@@ -1,0 +1,16 @@
+Third part wifi driver placed at external/wifi_driver to avoid submit to kernel.
+
+wifi drivers here will be auto build with modules use:
+./build.sh -K
+
+You can use following commands to manaul build the certain wifi driver (e.g. rtl8822es):
+cd exteranl/wifi_driver/
+make ARCH=arm64 -C ../../kernel M=$PWD clean
+make ARCH=arm64 -C ../../kernel M=$PWD
+ko will generate at exteranl/wifi_driver/rtl8822es/8822es.ko
+
+If exist both (e.g rtl8822es)
+kernel/drivers/net/wireless/rockchip_wlan/rtl8822es (CONFIG_RTL8822ES=m)
+and
+exteranl/wifi_driver/rtl8822es/
+will priority to use exteranl/wifi_driver/rtl8822es/
