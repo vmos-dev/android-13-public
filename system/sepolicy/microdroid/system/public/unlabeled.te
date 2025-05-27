@@ -1,0 +1,43 @@
+# Domain used for unlabeled_exec processes, as well as for adbd and adb shell
+# after performing an adb root command.
+
+# All types must be defined regardless of build variant to ensure
+# policy compilation succeeds with userdebug/user combination at boot
+type unlabeled_exec, domain;
+
+userdebug_or_eng(`
+  # Add unlabeled_exec to various domains
+  net_domain(unlabeled_exec)
+
+  dontaudit unlabeled_exec self:capability_class_set *;
+  dontaudit unlabeled_exec self:capability2 *;
+  dontaudit unlabeled_exec kernel:security *;
+  dontaudit unlabeled_exec { kernel file_type }:system *;
+  dontaudit unlabeled_exec self:memprotect *;
+  dontaudit unlabeled_exec domain:{ process process2 } *;
+  dontaudit unlabeled_exec domain:fd *;
+  dontaudit unlabeled_exec domain:dir *;
+  dontaudit unlabeled_exec domain:lnk_file *;
+  dontaudit unlabeled_exec domain:{ fifo_file file } *;
+  dontaudit unlabeled_exec domain:socket_class_set *;
+  dontaudit unlabeled_exec domain:ipc_class_set *;
+  dontaudit unlabeled_exec domain:key *;
+  dontaudit unlabeled_exec fs_type:filesystem *;
+  dontaudit unlabeled_exec {fs_type dev_type file_type}:dir_file_class_set *;
+  dontaudit unlabeled_exec node_type:node *;
+  dontaudit unlabeled_exec node_type:{ tcp_socket udp_socket rawip_socket } *;
+  dontaudit unlabeled_exec netif_type:netif *;
+  dontaudit unlabeled_exec port_type:socket_class_set *;
+  dontaudit unlabeled_exec port_type:{ tcp_socket dccp_socket } *;
+  dontaudit unlabeled_exec domain:peer *;
+  dontaudit unlabeled_exec domain:binder *;
+  dontaudit unlabeled_exec property_type:property_service *;
+  dontaudit unlabeled_exec property_type:file *;
+  dontaudit unlabeled_exec service_manager_type:service_manager *;
+  dontaudit unlabeled_exec servicemanager:service_manager list;
+  dontaudit unlabeled_exec domain:drmservice *;
+  dontaudit unlabeled_exec unlabeled_exec:filesystem *;
+  dontaudit unlabeled_exec domain:bpf *;
+  dontaudit unlabeled_exec unlabeled_exec:vsock_socket *;
+  dontaudit unlabeled_exec self:perf_event *;
+')

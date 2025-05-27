@@ -1,0 +1,101 @@
+# All types must be defined regardless of build variant to ensure
+# policy compilation succeeds with userdebug/user combination at boot
+type unlabeled_exec, domain;
+
+userdebug_or_eng(`
+  # Domain used for unlabeled_exec processes, as well as for adbd and adb shell
+  # after performing an adb root command.  The domain definition is
+  # wrapped to ensure that it does not exist at all on -user builds.
+  typeattribute unlabeled_exec mlstrustedsubject;
+
+  # Add unlabeled_exec to various domains
+  net_domain(unlabeled_exec)
+
+  # grant unlabeled_exec access to vndbinder
+  vndbinder_use(unlabeled_exec)
+
+  dontaudit unlabeled_exec self:capability_class_set *;
+  dontaudit unlabeled_exec kernel:security *;
+  dontaudit unlabeled_exec { kernel file_type }:system *;
+  dontaudit unlabeled_exec self:memprotect *;
+  dontaudit unlabeled_exec domain:{ process process2 } *;
+  dontaudit unlabeled_exec domain:fd *;
+  dontaudit unlabeled_exec domain:dir *;
+  dontaudit unlabeled_exec domain:lnk_file *;
+  dontaudit unlabeled_exec domain:{ fifo_file file } *;
+  dontaudit unlabeled_exec domain:socket_class_set *;
+  dontaudit unlabeled_exec domain:ipc_class_set *;
+  dontaudit unlabeled_exec domain:key *;
+  dontaudit unlabeled_exec fs_type:filesystem *;
+  dontaudit unlabeled_exec {fs_type dev_type file_type}:dir_file_class_set *;
+  dontaudit unlabeled_exec node_type:node *;
+  dontaudit unlabeled_exec node_type:{ tcp_socket udp_socket rawip_socket } *;
+  dontaudit unlabeled_exec netif_type:netif *;
+  dontaudit unlabeled_exec port_type:socket_class_set *;
+  dontaudit unlabeled_exec port_type:{ tcp_socket dccp_socket } *;
+  dontaudit unlabeled_exec domain:peer *;
+  dontaudit unlabeled_exec domain:binder *;
+  dontaudit unlabeled_exec property_type:property_service *;
+  dontaudit unlabeled_exec property_type:file *;
+  dontaudit unlabeled_exec service_manager_type:service_manager *;
+  dontaudit unlabeled_exec hwservice_manager_type:hwservice_manager *;
+  dontaudit unlabeled_exec vndservice_manager_type:service_manager *;
+  dontaudit unlabeled_exec servicemanager:service_manager list;
+  dontaudit unlabeled_exec hwservicemanager:hwservice_manager list;
+  dontaudit unlabeled_exec vndservicemanager:service_manager list;
+  dontaudit unlabeled_exec keystore:keystore_key *;
+  dontaudit unlabeled_exec domain:drmservice *;
+  dontaudit unlabeled_exec unlabeled_exec:filesystem *;
+  dontaudit unlabeled_exec postinstall_file:filesystem *;
+  dontaudit unlabeled_exec domain:bpf *;
+  dontaudit unlabeled_exec unlabeled_exec:vsock_socket *;
+
+  # VTS tests run in the permissive unlabeled_exec domain on debug builds, but the HALs
+  # being tested run in enforcing mode. Because hal_foo_server is enforcing
+  # unlabeled_exec needs to be declared as hal_foo_client to grant hal_foo_server
+  # permission to interact with it.
+  typeattribute unlabeled_exec halclientdomain;
+  typeattribute unlabeled_exec hal_allocator_client;
+  typeattribute unlabeled_exec hal_atrace_client;
+  typeattribute unlabeled_exec hal_audio_client;
+  typeattribute unlabeled_exec hal_authsecret_client;
+  typeattribute unlabeled_exec hal_bluetooth_client;
+  typeattribute unlabeled_exec hal_bootctl_client;
+  typeattribute unlabeled_exec hal_camera_client;
+  typeattribute unlabeled_exec hal_configstore_client;
+  typeattribute unlabeled_exec hal_confirmationui_client;
+  typeattribute unlabeled_exec hal_contexthub_client;
+  typeattribute unlabeled_exec hal_drm_client;
+  typeattribute unlabeled_exec hal_cas_client;
+  typeattribute unlabeled_exec hal_dumpstate_client;
+  typeattribute unlabeled_exec hal_fingerprint_client;
+  typeattribute unlabeled_exec hal_gatekeeper_client;
+  typeattribute unlabeled_exec hal_gnss_client;
+  typeattribute unlabeled_exec hal_graphics_allocator_client;
+  typeattribute unlabeled_exec hal_graphics_composer_client;
+  typeattribute unlabeled_exec hal_health_client;
+  typeattribute unlabeled_exec hal_input_classifier_client;
+  typeattribute unlabeled_exec hal_ir_client;
+  typeattribute unlabeled_exec hal_keymaster_client;
+  typeattribute unlabeled_exec hal_light_client;
+  typeattribute unlabeled_exec hal_memtrack_client;
+  typeattribute unlabeled_exec hal_neuralnetworks_client;
+  typeattribute unlabeled_exec hal_nfc_client;
+  typeattribute unlabeled_exec hal_oemlock_client;
+  typeattribute unlabeled_exec hal_power_client;
+  typeattribute unlabeled_exec hal_secure_element_client;
+  typeattribute unlabeled_exec hal_sensors_client;
+  typeattribute unlabeled_exec hal_telephony_client;
+  typeattribute unlabeled_exec hal_tetheroffload_client;
+  typeattribute unlabeled_exec hal_thermal_client;
+  typeattribute unlabeled_exec hal_tv_cec_client;
+  typeattribute unlabeled_exec hal_tv_input_client;
+  typeattribute unlabeled_exec hal_usb_client;
+  typeattribute unlabeled_exec hal_vibrator_client;
+  typeattribute unlabeled_exec hal_vr_client;
+  typeattribute unlabeled_exec hal_weaver_client;
+  typeattribute unlabeled_exec hal_wifi_client;
+  typeattribute unlabeled_exec hal_wifi_hostapd_client;
+  typeattribute unlabeled_exec hal_wifi_offload_client;
+  typeattribute unlabeled_exec hal_wifi_supplicant_client;
+')
