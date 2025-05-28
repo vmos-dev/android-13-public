@@ -3,3 +3,12 @@ external/angle/third_party/android_system_sdk/android_system.jar filter=lfs diff
 external/chromium-webview/prebuilt/arm/webview.apk filter=lfs diff=lfs merge=lfs -text
 external/chromium-webview/prebuilt/arm64/webview.apk filter=lfs diff=lfs merge=lfs -text
 external/kotlinc/lib/kotlin-compiler.jar filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/darwin-x86_64/qemu/darwin-x86_64/qemu-system-armel filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/darwin-x86_64/qemu/darwin-x86_64/qemu-system-i386 filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/darwin-x86_64/qemu/darwin-x86_64/qemu-system-x86_64 filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/darwin-x86_64/qemu/darwin-x86_64/qemu-system-aarch64 filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/darwin-x86_64/qemu/darwin-x86_64/qemu-system-aarch64-headless filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/darwin-x86_64/lib64/qt/lib/libQt5WebEngineCoreAndroidEmu.5.12.1.dylib filter=lfs diff=lfs merge=lfs -text
+prebuilts/android-emulator/linux-x86_64/lib64/qt/lib/libQt5WebEngineCoreAndroidEmu.so.5 filter=lfs diff=lfs merge=lfs -text
+prebuilts/asuite/acloud/acloud filter=lfs diff=lfs merge=lfs -text
+prebuilts/build-tools/common/framework/ktfmt.jar filter=lfs diff=lfs merge=lfs -text
