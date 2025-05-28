@@ -130,3 +130,5 @@ prebuilts/rust/linux-x86/1.59.0/lib/libLLVM-13-rust-dev.so filter=lfs diff=lfs m
 prebuilts/rust/linux-x86/1.59.0/lib/rustlib/x86_64-unknown-linux-gnu/lib/libcore-aac13a4a74d65b56.rlib filter=lfs diff=lfs merge=lfs -text
 prebuilts/rust/linux-x86/1.59.0/lib/rustlib/x86_64-linux-android/lib/libcore-29ea1f1e3529e839.rlib filter=lfs diff=lfs merge=lfs -text
 prebuilts/rust/linux-x86/1.59.0/lib/librustc_driver-03a4ba2a1a640918.so filter=lfs diff=lfs merge=lfs -text
+cts/tests/tests/content/data/malformed.apk.idsig filter=lfs diff=lfs merge=lfs -text
+tools/tradefederation/prebuilts/filegroups/tradefed/tradefed.jar filter=lfs diff=lfs merge=lfs -text
