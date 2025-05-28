@@ -1,0 +1,28 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# NOTE! Please use 'git ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+# Normal rules (sorted alphabetically)
+#
+# Rockchip directory (for rockchip modules)
+#
+
+new_vendor_boot.img
+modules_scan_result.load
+/ramdisk/lib/modules/
+/out/
+/.temp/
+/system/
+/vendor/lib/modules/
+
+vendor/etc/init.insmod.cfg
+vendor_ramdisk/lib/modules/modules.alias
+vendor_ramdisk/lib/modules/modules.dep
+vendor_ramdisk/lib/modules/modules.load
+vendor_ramdisk/lib/modules/modules.softdep
+*.class

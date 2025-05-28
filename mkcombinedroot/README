@@ -1,0 +1,33 @@
+目录结构:
+    kernel mkcombinedroot
+
+脚本默认只更新调试部分的驱动，默认驱动是Rockchip调试OK且能正常启动的版本。
+在以下文件添加modules.ko驱动的名字，执行打包脚本会自动在kernel下进行搜索并拷贝，生成对应的文件。
+res/debug_list.load
+
+- 添加新ko
+在res/vendor_ramdisk_modules.load中，需要的加载位置，添加需要增加的驱动ko名称，并将kernel目录中编译出的ko拷贝到vendor_ramdisk/lib/modules中。
+
+- 删除ko
+在res/vendor_ramdisk_modules.load中删除ko的名称，5.10/drivers/下的ko文件一同删除。
+
+- ko调试
+将需要单独调试的ko名称，添加到res/debug_list.load中。
+调试完成后，将自动拷贝到vendor_ramdisk/lib/modules的ko文件进行提交。
+
+- Android固件编译
+调试时，可以不关心load文件。但是编译完整Android固件时，load文件中不能含有重复的ko名称，否则会导致编译报错。
+执行检查脚本，能够检测出重复ko：
+```shell
+bash tools/gki_load_check.sh
+```
+
+- 更新Android固件的boot
+默认提交的boot.img是由Google定期编译、释放的GKI镜像，替换5.10/boot-5.10.img即可更新Android固件中的boot镜像。
+
+- 打包vendor_boot.img:
+```shell
+export COPY_ALL_KO=1 有此参数时直接从kernel目录拷贝所有ko, 如果不想使用这个参数，unset COPY_ALL_KO 取消
+export MY_DTB=rk3588s-tablet-v11 指定dtb的名称，不指定则默认为rk3588-evb1-lp4-v10, 如果不想使用这个参数，unset MY_DTB 取消
+./mkgki4.sh
+```

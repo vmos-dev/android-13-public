@@ -1,0 +1,59 @@
+diff --git a/repack_bootimg.py b/repack_bootimg.py
+index 93c28f9..361079e 100755
+--- a/repack_bootimg.py
++++ b/repack_bootimg.py
+@@ -125,7 +125,7 @@ class RamdiskImage:
+             #   -d: create directories if needed
+             #   -u: override existing files
+             subprocess.run(
+-                ['toybox', 'cpio', '-idu'], check=True,
++                ['cpio', '-idu'], check=True,
+                 input=decompressed_result.stdout, cwd=self._ramdisk_dir)
+ 
+             print(f"=== Unpacked ramdisk: '{self._ramdisk_img}' at "
+@@ -229,6 +229,7 @@ class BootImage:
+         # Uses previous mkbootimg args, e.g., --vendor_cmdline, --dtb_offset.
+         mkbootimg_cmd.extend(self._previous_mkbootimg_args)
+ 
++        print("BJC: Assuming mkbootimg cmd: {}".format(mkbootimg_cmd))
+         ramdisk_option = ''
+         if self._bootimg_type == BootImageType.BOOT_IMAGE:
+             ramdisk_option = '--ramdisk'
+@@ -248,14 +249,22 @@ class BootImage:
+             mkbootimg_cmd.extend(['--vendor_ramdisk_fragment', new_ramdisk])
+             mkbootimg_cmd.extend(['--vendor_boot', self._bootimg])
+ 
++        print("BJC: Detected ramdisk type: {}".format(ramdisk_option))
+         if ramdisk_option and ramdisk_option not in mkbootimg_cmd:
+-            raise RuntimeError("Failed to find '{}' from:\n  {}".format(
+-                ramdisk_option, shlex.join(mkbootimg_cmd)))
++            # Remove vendor_ramdisk_fragment
++            if ramdisk_option == '--vendor_ramdisk' and '--vendor_ramdisk_fragment' in mkbootimg_cmd:
++                fragment_index = mkbootimg_cmd.index('--vendor_ramdisk_fragment')
++                mkbootimg_cmd[fragment_index] = ramdisk_option
++                mkbootimg_cmd[fragment_index + 1] = 'fake_ramdisk'
++            else:
++                raise RuntimeError("Failed to find '{}' from:\n  {}".format(
++                    ramdisk_option, shlex.join(mkbootimg_cmd)))
+         # Replaces the original ramdisk with the newly packed ramdisk.
+         if ramdisk_option:
+             ramdisk_index = mkbootimg_cmd.index(ramdisk_option) + 1
+             mkbootimg_cmd[ramdisk_index] = new_ramdisk
+ 
++        print("BJC: Final mkbootimg cmd: {}".format(mkbootimg_cmd))
+         subprocess.check_call(mkbootimg_cmd)
+         print("=== Repacked boot image: '{}' ===".format(self._bootimg))
+ 
+diff --git a/unpack_bootimg.py b/unpack_bootimg.py
+index 462190f..7b7e018 100755
+--- a/unpack_bootimg.py
++++ b/unpack_bootimg.py
+@@ -363,8 +363,6 @@ class VendorBootImageInfoFormatter:
+             for entry in self.vendor_ramdisk_table:
+                 (output_ramdisk_name, _, _, ramdisk_type,
+                  ramdisk_name, board_id) = entry
+-                args.extend(['--ramdisk_type', str(ramdisk_type)])
+-                args.extend(['--ramdisk_name', ramdisk_name])
+                 for idx, e in enumerate(board_id):
+                     if e:
+                         args.extend([f'--board_id{idx}', f'{e:#010x}'])
