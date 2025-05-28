@@ -117,3 +117,16 @@ prebuilts/sdk/32/system/android-non-updatable.jar filter=lfs diff=lfs merge=lfs 
 prebuilts/sdk/32/system/android.jar filter=lfs diff=lfs merge=lfs -text
 prebuilts/sdk/32/module-lib/android-non-updatable.jar filter=lfs diff=lfs merge=lfs -text
 prebuilts/sdk/32/module-lib/android.jar filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/darwin-x86/1.58.1/lib/librustc_driver-2c83a1c9848b70fe.dylib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/darwin-x86/1.57.0/lib/librustc_driver-9fc8e29e329efe4a.dylib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/darwin-x86/1.58.0/lib/librustc_driver-f5ac47a269714998.dylib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/darwin-x86/1.59.0/lib/rustlib/x86_64-apple-darwin/lib/libcore-b48aead995f13948.rlib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/darwin-x86/1.59.0/lib/rustlib/x86_64-linux-android/lib/libcore-078bb4b1d7d887d7.rlib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/darwin-x86/1.59.0/lib/librustc_driver-3487136fff8b0dfa.dylib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.58.1/lib/librustc_driver-a20935b6c8ca35d0.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.57.0/lib/librustc_driver-06eaf99ea04689bb.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.58.0/lib/librustc_driver-03478b497782ad74.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.59.0/lib/libLLVM-13-rust-dev.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.59.0/lib/rustlib/x86_64-unknown-linux-gnu/lib/libcore-aac13a4a74d65b56.rlib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.59.0/lib/rustlib/x86_64-linux-android/lib/libcore-29ea1f1e3529e839.rlib filter=lfs diff=lfs merge=lfs -text
+prebuilts/rust/linux-x86/1.59.0/lib/librustc_driver-03a4ba2a1a640918.so filter=lfs diff=lfs merge=lfs -text
